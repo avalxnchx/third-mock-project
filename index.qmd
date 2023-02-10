@@ -1,35 +1,32 @@
 ---
-title: "third-mock-project"
+title: "Dallas by Bachelor Degrees"
 ---
 
 
+
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
 library(tidyverse)
 library(tidycensus)
 library(leaflet)
-```
 
-```{r}
-dallas_bachelors <- 
-  get_acs(geography = "tract",
-          variables = "DP02_0068P",
-          year = 2020,
-          state = "TX",
-          county = "Dallas",
-          geometry = TRUE)
-
-
+dallas_bachelors <- read_rds("data/dallas.rds")
 ```
 
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
 pal <- colorNumeric(
   palette = "magma",
   domain = dallas_bachelors$estimate
 )
-```
 
-```{r}
 leaflet() %>%
   addProviderTiles(providers$Stamen.TonerLite) %>%
   addPolygons(data = dallas_bachelors,
